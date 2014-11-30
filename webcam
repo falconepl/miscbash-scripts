@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# WebCam - a script that allows to manage your web camera
+# This script is a part of MiscBash Scripts set of scripts
+# https://github.com/falconepl/miscbash-scripts
+
+# Globally available variables
+global_vars() {
+    glob_toolkit_name="MiscBash Scripts"
+    glob_toolkit_url="https://github.com/falconepl/miscbash-scripts"
+    glob_prog_name="WebCam"
+    glob_prog_ver="0.1"
+}
+
+# Shows the help
+usage() {
+    echo "$glob_prog_name v$glob_prog_ver"
+    echo "This script is a part of $glob_toolkit_name set of scripts"
+    echo "Usage: $0 <command>"
+    echo ""
+    echo "Commands:"
+    echo "   on       Turns the web camera on"
+    echo "   off      Turns the web camera off"
+    echo "   config   Opens blacklist config that allows to disable the web camera on a system reboot"
+    echo "            Append 'blacklist uvcvideo' to that file if you want to do so"
+    echo ""
+    echo "See $glob_toolkit_url for more information and other scripts"
+    echo ""
+}
+
+global_vars
+
+if [[ "$1" == "on" ]]; then
+    sudo modprobe uvcvideo
+elif [[ "$1" == "off" ]]; then
+    sudo modprobe -r uvcvideo
+elif [[ "$1" == "config" ]]; then
+    sudo vi /etc/modprobe.d/blacklist.conf
+elif [[ "$1" == "help" ]]; then
+    usage
+else
+    usage
+fi
+
